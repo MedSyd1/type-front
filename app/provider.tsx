@@ -40,7 +40,6 @@ export type customeCharacter= {
     id : number;
 }
 
-
 export const  arrayCharacters  = (line:string) : customeCharacter[] => {
 
     const cs : customeCharacter[] = []
@@ -48,4 +47,7 @@ export const  arrayCharacters  = (line:string) : customeCharacter[] => {
     for (const c of line )
         cs.push({label: c , state : null , id : i++})
     return cs
+}
+export type TestProps  = {
+    setResult : (value:boolean) => void;
 }
