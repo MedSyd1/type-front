@@ -51,3 +51,4 @@ export const  arrayCharacters  = (line:string) : customeCharacter[] => {
 export type TestProps  = {
     setResult : (value:boolean) => void;
 }
+

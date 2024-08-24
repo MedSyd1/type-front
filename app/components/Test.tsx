@@ -2,9 +2,14 @@
 
 import { useEffect, useState } from "react";
 import "./test.css";
-import { arrayCharacters, customeCharacter ,TestProps} from "../provider";
+import {
+  randomWords,
+  arrayCharacters,
+  customeCharacter,
+  TestProps,
+} from "../provider";
 
-export default function Test({setResult}:TestProps) {
+export default function Test({ setResult }: TestProps) {
   const [line, setLine] = useState("");
   const [characters, setCharacters] = useState<customeCharacter[]>([]);
   const [expectedLetter, setExpectedLetter] = useState<customeCharacter | null>(
@@ -14,16 +19,18 @@ export default function Test({setResult}:TestProps) {
   const [correctIds, setCorrectIds] = useState<number[]>([]);
   const [wrongIds, setWrongIds] = useState<number[]>([]);
   const [R, setR] = useState(true);
-
+  const [start,setStart] = useState<Date | null>(null)
+  const [end,setEnd] = useState<Date | null>(null)
+  const [AR,setAR] = useState(false)
   const handleKeydown = (event: KeyboardEvent) => {
-    console.log("the pressed key", event.key);
 
+    setAR(true)
+    
     if (event.key === "Backspace") {
-      console.log("go back");
       setR(false);
       return;
     }
-
+    
     const newIndex = index + 1;
     setIndex((prev) => prev + 1);
     setR(true);
@@ -41,8 +48,8 @@ export default function Test({setResult}:TestProps) {
   };
 
   useEffect(() => {
-    // setLine(randomWords(1).join(" ").trim());
-    setLine("make")
+    // setLine(randomWords(10).join(" ").trim());
+    setLine("make make make");
     window.addEventListener("keydown", handleKeydown);
     return () => {
       window.removeEventListener("keydown", handleKeydown);
@@ -52,52 +59,47 @@ export default function Test({setResult}:TestProps) {
   useEffect(() => {
     setCharacters(arrayCharacters(line));
     setExpectedLetter(arrayCharacters(line)[index]);
-    console.log("the length of the line : " ,line.length)
   }, [line]);
 
   useEffect(() => {
-    if (index === line.length)
-        {
-            if (correctIds.includes(index - 1)){
-                setLine("")
-                setCharacters([])
-                setExpectedLetter(null)
-                setIndex(0)
-                setCorrectIds([])
-                setWrongIds([])
-                setR(true)
-                setResult(true)
-            }
-        }
+    if (index === 1 && start === null)
+        setStart(new Date())
+    if (index === line.length) {
+      if (correctIds.includes(index - 1)) {
+        setLine("");
+        setCharacters([]);
+        setExpectedLetter(null);
+        setIndex(0);
+        setCorrectIds([]);
+        setWrongIds([]);
+        setR(true);
+        if(end === null)
+          setEnd(new Date())
+        // setResult(true)
+      }
+    }
     setExpectedLetter(arrayCharacters(line)[index]);
-    console.log("the index", index);
   }, [index]);
 
   useEffect(() => {
     if (expectedLetter) {
-      console.log("the expected letter is : ", expectedLetter);
-      console.log("the correct ids : ", correctIds);
-      console.log("the wrong ids : ", wrongIds);
-
-      // Remove the expected letter from correctIds or wrongIds if it exists
-      setCorrectIds((prev) =>
-        prev.filter((id) => id !== expectedLetter.id)
-      );
-      setWrongIds((prev) =>
-        prev.filter((id) => id !== expectedLetter.id)
-      );
+      setCorrectIds((prev) => prev.filter((id) => id !== expectedLetter.id));
+      setWrongIds((prev) => prev.filter((id) => id !== expectedLetter.id));
     }
   }, [expectedLetter]);
 
   useEffect(() => {
     if (!R) {
-      console.log(
-        "we need to decrease the size of the tables" + new Date().getTime()
-      );
       if (index > 0) setIndex((prev) => prev - 1);
       setR(true);
     }
   }, [R]);
+
+useEffect(()=>{
+  console.log("start : " , start?.getTime())
+  console.log("end  : " , end?.getTime())
+  
+},[start,end])
 
   return (
     <div className="container">

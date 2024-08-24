@@ -3,7 +3,6 @@
     flex-wrap: wrap; /* Allows the divs to wrap to the next line */
     gap: 5px; /* Optional: adds space between the divs */
     width: 100%; /* Or specify a max-width if needed */
-    /* background-color: rgb(89, 89, 89); */
     padding:100px ;
   }
   

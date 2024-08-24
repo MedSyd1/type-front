@@ -1,0 +1,48 @@
+.Resultcontainer {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center; /* Center align all elements */
+    justify-content: center; /* Center vertically */
+    /* background-color: rgb(50, 50, 50); */
+    padding: 20px;
+    border-radius: 10px;
+    width: 50%; /* Adjust width according to your design */
+
+
+
+}
+
+.wpm, .characters, .time {
+    margin: 10px 0; /* Space between each section */
+    text-align: center; /* Center align text */
+    color:#D7D2BC;
+}
+
+.wpm .div, .characters .char, .time .tm {
+    font-size: 2rem; /* Increase the font size */
+    font-weight: bold;
+}
+
+.container1 {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.characters, .time {
+    flex: 1;
+    margin: 0 5px; /* Add some spacing between time and characters */
+}
+
+label {
+    display: block;
+    font-size: 1.3rem;
+    margin-bottom: 5px;
+    color: #8F8E84;
+
+}
+
+
+.char > span {
+    margin: 0 5px; /* Adds spacing around the slashes */
+}

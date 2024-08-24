@@ -16,7 +16,7 @@ export default function Home() {
       <main>
         {/* here we need to create a condition to render either the Test or the Result */}
       {!result && <Test  setResult={setResult} />}
-      {result && <Result/>}
+      {result && <Result setResult={setResult} />}
       </main>
       
     </>
