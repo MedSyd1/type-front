@@ -9,7 +9,7 @@ import {
   TestProps,
 } from "../provider";
 
-export default function Test({ setResult }: TestProps) {
+export default function Test({getInfos}:TestProps) {
   const [line, setLine] = useState("");
   const [characters, setCharacters] = useState<customeCharacter[]>([]);
   const [expectedLetter, setExpectedLetter] = useState<customeCharacter | null>(
@@ -21,10 +21,10 @@ export default function Test({ setResult }: TestProps) {
   const [R, setR] = useState(true);
   const [start,setStart] = useState<Date | null>(null)
   const [end,setEnd] = useState<Date | null>(null)
-  const [AR,setAR] = useState(false)
+
+
   const handleKeydown = (event: KeyboardEvent) => {
 
-    setAR(true)
     
     if (event.key === "Backspace") {
       setR(false);
@@ -47,9 +47,10 @@ export default function Test({ setResult }: TestProps) {
     });
   };
 
+
   useEffect(() => {
-    // setLine(randomWords(10).join(" ").trim());
-    setLine("make make make");
+    // setLine(randomWords(1).join(" ").trim());
+    setLine("make then that lost of");
     window.addEventListener("keydown", handleKeydown);
     return () => {
       window.removeEventListener("keydown", handleKeydown);
@@ -65,18 +66,11 @@ export default function Test({ setResult }: TestProps) {
     if (index === 1 && start === null)
         setStart(new Date())
     if (index === line.length) {
-      if (correctIds.includes(index - 1)) {
-        setLine("");
-        setCharacters([]);
-        setExpectedLetter(null);
-        setIndex(0);
-        setCorrectIds([]);
-        setWrongIds([]);
-        setR(true);
+      if (correctIds.includes(index - 1) || wrongIds.includes(index -1)) {
         if(end === null)
           setEnd(new Date())
-        // setResult(true)
       }
+
     }
     setExpectedLetter(arrayCharacters(line)[index]);
   }, [index]);
@@ -95,11 +89,13 @@ export default function Test({ setResult }: TestProps) {
     }
   }, [R]);
 
-useEffect(()=>{
-  console.log("start : " , start?.getTime())
-  console.log("end  : " , end?.getTime())
-  
+useEffect(() =>{
+  if (start !== null && end !== null)
+    if(getInfos)
+    getInfos(start,end,correctIds,wrongIds)
 },[start,end])
+
+
 
   return (
     <div className="container">

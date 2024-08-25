@@ -49,6 +49,10 @@ export const  arrayCharacters  = (line:string) : customeCharacter[] => {
     return cs
 }
 export type TestProps  = {
-    setResult : (value:boolean) => void;
+    getInfos? : (start:Date,end:Date,correctIs:number[],wrongIds:number[]) => void;
+    updateState?: () => void;
+    wpm?: number;  // Optional properties
+    ts?: number;
+    nc?: number;
+    nw?: number;
 }
-

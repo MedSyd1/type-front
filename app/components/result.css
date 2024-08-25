@@ -1,48 +1,100 @@
-.Resultcontainer {
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+  }
+  
+
+  .Resultcontainer {
     display: flex;
-    flex-direction: column; /* Stack elements vertically */
-    align-items: center; /* Center align all elements */
-    justify-content: center; /* Center vertically */
-    /* background-color: rgb(50, 50, 50); */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* background-color: rgb(27, 27, 27); */
+    box-shadow: 0 10px 10px rgba(255, 255, 255, 0.1);
+
     padding: 20px;
-    border-radius: 10px;
-    width: 50%; /* Adjust width according to your design */
+    border-radius: 15px;
+    width: 50%;
+    opacity: 0;
+    animation: fadeIn 1s ease-in-out forwards;
+  }
+  
 
-
-
-}
-
-.wpm, .characters, .time {
-    margin: 10px 0; /* Space between each section */
-    text-align: center; /* Center align text */
-    color:#D7D2BC;
-}
-
-.wpm .div, .characters .char, .time .tm {
-    font-size: 2rem; /* Increase the font size */
+  .Resultcontainer.fadeOut {
+    animation: fadeOut 1s ease-in-out forwards;
+  }
+  
+  .wpm, .characters, .time {
+    margin: 10px 0;
+    text-align: center;
+    color: #D7D2BC;
+  }
+  
+  .wpm .div, .characters .char, .time .tm {
+    font-size: 2rem;
     font-weight: bold;
-}
-
-.container1 {
+  }
+  
+  .container1 {
     display: flex;
     justify-content: space-between;
     width: 100%;
-}
-
-.characters, .time {
+  }
+  
+  .characters, .time {
     flex: 1;
-    margin: 0 5px; /* Add some spacing between time and characters */
-}
-
-label {
+    margin: 0 5px;
+  }
+  
+  label {
     display: block;
-    font-size: 1.3rem;
+    font-size: 1.5rem;
     margin-bottom: 5px;
     color: #8F8E84;
-
+  }
+  
+  .correctNc {
+      color: aquamarine;
 }
 
+.wrongNw {
+      color:#FF4A59;
+  }
+  
+  .icon-button{
+    width: 50px;
+    height:50px;
+  }
+  .icon-button:hover{
+        background-color: #838383;
+        color: black;
+        size: 3rem;
+        border-radius: 7px;
+  }
 
-.char > span {
-    margin: 0 5px; /* Adds spacing around the slashes */
-}
+   .icon-button .fa {
+    font-size: inherit; 
+  } 
+
+  .seconds{
+    /* color:rgb(139, 215, 24);
+     */
+     color : aquamarine
+  }

@@ -11,3 +11,16 @@ main{
     justify-content: center;
     margin-top: 10%;
 }
+
+
+
+
+.result-container {
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+  }
+  
+  .result-container.visible {
+    opacity: 1;
+  }
+  
