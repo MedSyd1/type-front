@@ -55,4 +55,7 @@ export type TestProps  = {
     ts?: number;
     nc?: number;
     nw?: number;
+    userDto? : {id:number,name : string,age:number,email:string,phone:string,sex:string,username:string,password:string,country:string};
+   
+
 }

@@ -1,38 +1,104 @@
 "use client";
-// Profile.tsx
+
 import { faUser, faPen } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
-import { Pagination } from 'react-bootstrap'; // Import Pagination
+import { useEffect, useState } from 'react';
+import { Button, Modal, Pagination } from 'react-bootstrap'; 
 import Header from "../components/Header";
 import "./profile.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { getUserInfos, getResults,updateInfos } from '../actions';
 
-const resultsPerPage = 10; // Number of results per page
+
+
+
+
+const resultsPerPage = 10; 
 
 export default function Profile() {
   const [currentPage, setCurrentPage] = useState(1);
+  const [showModal,setShowModal] = useState(false)
+  const [userDto,setUserDto] = useState<any>(null);
+  const [resultsDto,setResultsDto] = useState<any[]>([])
+  const [idValue,setIdValue] = useState(1)
+  const [nameValue,setNameValue] = useState("")
+  const [ageValue,setAgeValue] = useState("")
+  const [emailValue,setEmailValue] = useState("")
+  const [phoneValue,setPhoneValue] = useState("")
+  const [sexValue,setSexValue] = useState("")
+  const [usernameValue,setUserNameValue] = useState("")
+  const [passwordValue,setPasswordValue] = useState("")
+  const [countryValue,setCountryValue] = useState("")
 
-  const results = [
-    { wpm: 75, characters: 300, date: '2024-08-23' },
-    { wpm: 85, characters: 350, date: '2024-08-24' },
-    { wpm: 85, characters: 350, date: '2024-08-24' },
-    { wpm: 85, characters: 350, date: '2024-08-24' },
-    { wpm: 85, characters: 350, date: '2024-08-24' },
-    { wpm: 85, characters: 350, date: '2024-08-24' },
-    { wpm: 85, characters: 350, date: '2024-08-24' },
-    { wpm: 85, characters: 350, date: '2024-08-24' },
-    { wpm: 85, characters: 350, date: '2024-08-24' },
-    { wpm: 85, characters: 350, date: '2024-08-24' },
-    { wpm: 85, characters: 350, date: '2024-08-24' },
-    { wpm: 85, characters: 350, date: '2024-08-24' },
-    // Add more results as needed
-  ];
-
+  // for the pagination 
   const indexOfLastResult = currentPage * resultsPerPage;
   const indexOfFirstResult = indexOfLastResult - resultsPerPage;
-  const currentResults = results.slice(indexOfFirstResult, indexOfLastResult);
+  const currentResults = resultsDto.slice(indexOfFirstResult, indexOfLastResult);
+  const pageNumbers = Math.ceil(resultsDto.length / resultsPerPage);
 
-  const pageNumbers = Math.ceil(results.length / resultsPerPage);
+  // for the Modal 
+  const handleOpenModal = () => setShowModal(true)
+  const handleCloseModal = () => { 
+ 
+    const userDto1 : any  = {
+      id: Number(idValue),
+      name: nameValue,
+      age: Number(ageValue),
+      email: emailValue,
+      phone: Number(phoneValue),
+      sex: sexValue,
+      username: usernameValue,
+      password: passwordValue,
+      country: countryValue
+  };
+    if(userDto1)
+      updateInfos(userDto1)
+
+    setShowModal(false)
+  }
+
+
+  const fetchUserData = async () => {
+    try{
+      const data = await getUserInfos("user1");
+      setUserDto(data)
+    }catch(e){}
+  }
+
+  const fetchUserResults = async () => {
+    try{
+      const data = await getResults(userDto.username);
+      setResultsDto(data)
+    }catch(e){
+    }
+  }
+
+  useEffect(()  => {
+    fetchUserData();
+  },[])
+
+
+
+
+  useEffect(()=>{
+    if(userDto)
+    console.log("userDto : " , userDto)
+    if(userDto)
+      fetchUserResults();
+    if(userDto)
+   {
+    setNameValue(userDto.name);
+    setAgeValue(userDto.age);
+    setEmailValue(userDto.email);
+    setPhoneValue(userDto.phone);
+    setSexValue(userDto.sex);
+    setUserNameValue(userDto.username)
+    setPasswordValue(userDto.password)
+    setCountryValue(userDto.country)
+   }
+  },[userDto])
+
+
 
   return (
     <>
@@ -42,10 +108,10 @@ export default function Profile() {
           <div className="user-info">
             <FontAwesomeIcon className="user-icon" icon={faUser} />
             <div className="user-details">
-              <h2 className="user-name">John Doe</h2>
+              <h2 className="user-name">{userDto? userDto.username:'loading...'}</h2>
             </div>
           </div>
-          <FontAwesomeIcon className="btn edit-icon" icon={faPen} onClick={()=>console.log("edit")} />
+          <FontAwesomeIcon className="btn edit-icon" icon={faPen} onClick={()=>handleOpenModal()} />
         </div>
 
         <div className="result-table mt-5">
@@ -62,7 +128,7 @@ export default function Profile() {
               {currentResults.map((result, index) => (
                  <tr key={index}>
                   <td>{result.wpm}</td>
-                  <td>{result.characters}</td>
+                  <td>{result.chars}</td>
                   <td>{result.date}</td>
                 </tr>
               ))}
@@ -90,6 +156,89 @@ export default function Profile() {
 
         </div>
       </div>
+
+
+      <Modal show={showModal} onHide={() => setShowModal(false)} className='modal'>
+  <Modal.Body className='modalBbody'>
+    <label htmlFor="name">Name</label>
+    <input 
+      type="text" 
+      name="name" 
+      id="name" 
+      value={nameValue} 
+      onChange={(e) => setNameValue(e.target.value)} 
+    />
+
+    <label htmlFor='age'>Age</label>
+    <input 
+      type="text" 
+      name="age" 
+      id="age" 
+      value={ageValue} 
+      onChange={(e) => setAgeValue(e.target.value)} 
+    />
+
+    <label htmlFor="phone">Phone</label>
+    <input 
+      type="text" 
+      name="phone" 
+      id="phone" 
+      value={phoneValue} 
+      onChange={(e) => setPhoneValue(e.target.value)} 
+    />
+
+    <label htmlFor="sex">Sex</label>
+    <input 
+      type="text" 
+      name="sex" 
+      id="sex" 
+      value={sexValue} 
+      onChange={(e) => setSexValue(e.target.value)} 
+    />
+
+    <label htmlFor="country">Country</label>
+    <input 
+      type="text" 
+      name="country" 
+      id="country" 
+      value={countryValue} 
+      onChange={(e) => setCountryValue(e.target.value)} 
+    />
+
+    <label htmlFor="email">Email</label>
+    <input 
+      type="email" 
+      name="email" 
+      id="email" 
+      value={emailValue} 
+      onChange={(e) => setEmailValue(e.target.value)} 
+    />
+
+    <label htmlFor="username">Username</label>
+    <input 
+      type="text" 
+      name='username' 
+      id='username' 
+      value={usernameValue} 
+      onChange={(e) => setUserNameValue(e.target.value)} 
+    />
+
+    <label htmlFor="password">Password</label>
+    <input 
+      type="text" 
+      name="password" 
+      id="password" 
+      value={passwordValue}
+      onChange={(e) => setPasswordValue(e.target.value)} 
+    />
+  </Modal.Body>
+  <Modal.Footer className='footer'>
+    <Button onClick={handleCloseModal}> Save </Button>
+  </Modal.Footer>
+</Modal>
+
+
+
     </>
   );
 }

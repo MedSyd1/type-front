@@ -127,3 +127,62 @@ body{
     box-shadow: 0 10px 10px rgba(255, 255, 255, 0.1);
   }
   
+
+
+  .modalBbody{
+    background: #2F3338;
+    color: #D7D2BC; 
+    display: flex;
+    flex-direction: column;
+    /* border-radius:10px; */
+  }
+
+  .modalBbody input{
+    /* background: #2F3338; */
+    background-color: gray;
+    color: #D7D2BC; 
+    border-radius: 7px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-left: 10px;
+  }
+
+  .modalBbody input:focus {
+    border: none; /* Ensure no border is added on focus */
+    outline: none; /* Ensure no outline is added on focus */
+  }
+
+  .modalBbody input:-webkit-autofill {
+    background-color: gray !important;
+    border-radius: 7px;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+
+  /* Apply the same styling for autofilled input in focus state */
+.modalBbody input:-webkit-autofill:focus {
+  background-color: gray !important;
+  border-radius: 7px;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #2F3338;
+  border-top: none; /* Ensure no border on top */
+  margin-top: 0; /* Remove margin if any */
+  padding-top: 0; /* Remove padding if any */
+}
+.footer button{
+    background: #2F3338;
+    color: #D7D2BC; 
+    border:none;
+    width: 200px;
+    box-shadow: 0 10px 10px rgba(255, 255, 255, 0.1);
+
+}
+
+.footer button:hover{
+  background: #2b2e33;
+}
