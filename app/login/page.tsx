@@ -4,7 +4,7 @@ import "./login.css"
 export default function(){
 
     return (
-        <form action="http://localhost:8080/login" method="POST">
+        <form action="http://localhost:8080/auth/login" method="POST">
         <div className="container">
           <div className="username">
             <label htmlFor="username">Username</label>
