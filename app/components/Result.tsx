@@ -3,8 +3,35 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { TestProps } from '../provider';
 import "./result.css"
+import { useEffect } from 'react';
+import {sendResult} from '../actions';
 
 export default function Result({updateState,wpm,ts,nc,nw}:TestProps) {
+
+    const addingResult = async () => {
+
+        const currentDate = new Date();
+            const formattedDate = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1)
+            .toString()
+            .padStart(2, '0')}-${currentDate.getDate()
+            .toString()
+            .padStart(2, '0')} ${currentDate.getHours()
+            .toString()
+            .padStart(2, '0')}:${currentDate.getMinutes()
+            .toString()
+            .padStart(2, '0')}`;
+
+        const resultDto : any = {folder_Id:1,wpm:Number(wpm),date : formattedDate, chars:`${nc} / ${nw}` }
+        const data = sendResult(resultDto);
+    }
+    useEffect(()=>{
+        try{
+            addingResult();
+        }catch(e){}
+
+    },[])
+
+
     return (
         <div className="Resultcontainer">
             <div className="wpm">

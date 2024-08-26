@@ -1,0 +1,46 @@
+body{
+    background: #2F3338;
+    color : white;
+    font : 20px  "Roboto Mono", "Roboto Mono", "Vazirmatn", monospace ;
+    color:#8F8E84;
+}
+
+
+.container
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center;
+    margin-top: 100px;
+}
+
+
+.username{
+
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.password{
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center;
+    margin-top: 50px;
+}
+
+button
+{
+    background-color:#8F8E84;
+    margin-top: 10px;
+    width: 100px;
+    border-radius: 7px;
+    color:white;
+    padding:2px;
+
+    
+}

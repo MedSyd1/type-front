@@ -60,7 +60,7 @@ export default function Profile() {
 
   const fetchUserData = async () => {
     try{
-      const data = await getUserInfos("user1");
+      const data = await getUserInfos("medSyd");
       setUserDto(data)
     }catch(e){}
   }

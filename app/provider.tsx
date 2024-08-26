@@ -56,6 +56,6 @@ export type TestProps  = {
     nc?: number;
     nw?: number;
     userDto? : {id:number,name : string,age:number,email:string,phone:string,sex:string,username:string,password:string,country:string};
-   
-
+    resultDto: {folder_Id:number,wpm:number,date:string,chars:string}
+    
 }
