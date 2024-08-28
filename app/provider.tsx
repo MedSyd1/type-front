@@ -1,4 +1,8 @@
-
+import { headers } from "next/headers";
+import apiClient from "./interceptor";
+import axios from "./interceptor";
+import { jwtDecode, JwtPayload} from "jwt-decode";
+import { createJwtCookie, deleteCookie } from "./lib/cookies";
 
 const words = [
     "apple", "banana", "cherry", "date", "elderberry", "fig", "grape", "honeydew", "kiwi", "lemon",
@@ -56,6 +60,47 @@ export type TestProps  = {
     nc?: number;
     nw?: number;
     userDto? : {id:number,name : string,age:number,email:string,phone:string,sex:string,username:string,password:string,country:string};
-    resultDto: {folder_Id:number,wpm:number,date:string,chars:string}
+    resultDto?: {folder_Id:number,wpm:number,date:string,chars:string}
     
+}
+
+export interface CustomJwtPayload extends JwtPayload{
+    scope:string[];
+}
+
+export const login = async (username:string,password:string) => {
+
+    try
+    {
+        const options = {headers:{
+            "Content-Type": "application/x-www-form-urlencoded",
+        },};
+
+        const url = "http://localhost:8080/auth/login";
+        const params = new URLSearchParams();
+        params.append("username",username);
+        params.append("password",password);
+        const res = await axios.post(url,params,options)
+
+        if(res.status === 200)
+        {
+            const decodeJwt = jwtDecode<CustomJwtPayload>(res.data['access-token'])
+            // console.log(decodeJwt)
+            const roles = decodeJwt.scope;
+            await createJwtCookie("jwt",res.data['access-token']);
+            await createJwtCookie("isAuthenticated",true);
+            await createJwtCookie("roles",roles);
+            return res.data;
+        }
+        
+    }
+    catch(error){
+        console.error("there is an error is the provider file : " ,error)
+    }
+
+}
+export const logout = async () => {
+    await deleteCookie("jwt");
+    await deleteCookie("isAuthenticated");
+    await deleteCookie("roles");
 }

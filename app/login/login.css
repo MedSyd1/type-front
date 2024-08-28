@@ -1,4 +1,5 @@
-body{
+body
+{
     background: #2F3338;
     color : white;
     font : 20px  "Roboto Mono", "Roboto Mono", "Vazirmatn", monospace ;
@@ -16,8 +17,8 @@ body{
 }
 
 
-.username{
-
+.username
+{
     display: flex;
     flex-direction: column;
     align-items: center; 
@@ -25,13 +26,15 @@ body{
     margin-top: 50px;
 }
 
-.password{
+.password
+{
     display: flex;
     flex-direction: column;
     align-items: center; 
     justify-content: center;
     margin-top: 50px;
 }
+
 
 button
 {
@@ -41,6 +44,4 @@ button
     border-radius: 7px;
     color:white;
     padding:2px;
-
-    
 }

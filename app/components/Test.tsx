@@ -49,7 +49,7 @@ export default function Test({getInfos}:TestProps) {
 
 
   useEffect(() => {
-    // setLine(randomWords(1).join(" ").trim());
+    // setLine(randomWords(50).join(" ").trim());
     setLine("make then that lost of");
     window.addEventListener("keydown", handleKeydown);
     return () => {
@@ -98,7 +98,7 @@ useEffect(() =>{
 
 
   return (
-    <div className="container">
+    <div className="containerTest">
       {characters.map((n) => (
         <div
           className={`cell ${

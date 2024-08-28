@@ -93,7 +93,7 @@ export default function Profile() {
     setPhoneValue(userDto.phone);
     setSexValue(userDto.sex);
     setUserNameValue(userDto.username)
-    setPasswordValue(userDto.password)
+    // setPasswordValue(userDto.password)
     setCountryValue(userDto.country)
    }
   },[userDto])

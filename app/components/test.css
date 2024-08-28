@@ -1,9 +1,10 @@
-.container {
+.containerTest {
     display: flex;
     flex-wrap: wrap; /* Allows the divs to wrap to the next line */
     gap: 5px; /* Optional: adds space between the divs */
     width: 100%; /* Or specify a max-width if needed */
     padding:100px ;
+    /* background-color: gray; */
   }
   
   .cell {
