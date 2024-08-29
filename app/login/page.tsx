@@ -1,13 +1,16 @@
 "use client"
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useContext, useState } from "react";
 import "./login.css";
 import { useRouter } from "next/navigation";
 import {jwtDecode} from "jwt-decode"; // Ensure correct import
 import { CustomJwtPayload, login } from "../provider";
 import { getCookie } from "../lib/cookies";
+import GlobalContext from "../context";
 
 export default function Page() {
+    const context = useContext(GlobalContext);
+    const {gUsername,setGUsername,userId,setUserId,folder_Id,setFolder_Id} = {...context}
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -18,9 +21,14 @@ export default function Page() {
 
         try {
             const data = await login(username, password);
-            console.log("This is the data: ", data);
 
             let decodeData = jwtDecode<CustomJwtPayload>(data['access-token']);
+            console.log( decodeData)
+            
+            setGUsername(decodeData['sub']);
+            setUserId(decodeData['userId'])
+            setFolder_Id(decodeData['folderId'])
+
             let roles = decodeData.scope;
 
             if (roles.includes("user_role")) {
@@ -29,11 +37,8 @@ export default function Page() {
                 console.log("You do not have the required role.");
             }
 
-            console.log(decodeData);
-
         } catch (error) {
             console.error("Login failed:", error);
-            // Display error message to the user
         }
     };
 

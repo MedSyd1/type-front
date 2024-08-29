@@ -8,6 +8,8 @@ import "./profile.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { getUserInfos, getResults,updateInfos } from '../actions';
+import GlobalContext from '../context';
+import { useContext} from 'react';
 
 
 
@@ -16,6 +18,14 @@ import { getUserInfos, getResults,updateInfos } from '../actions';
 const resultsPerPage = 10; 
 
 export default function Profile() {
+
+  const context = useContext(GlobalContext);
+
+  const {gUsername,setGUsername} = {...context}
+  const [username,setUsername] = useState("loading...")
+
+
+
   const [currentPage, setCurrentPage] = useState(1);
   const [showModal,setShowModal] = useState(false)
   const [userDto,setUserDto] = useState<any>(null);
@@ -51,38 +61,41 @@ export default function Profile() {
       password: passwordValue,
       country: countryValue
   };
-    if(userDto1)
+    if(userDto1){
       updateInfos(userDto1)
-
+      setGUsername(userDto1.username)
+    }
     setShowModal(false)
   }
 
-
   const fetchUserData = async () => {
     try{
-      const data = await getUserInfos("medSyd");
+      const data = await getUserInfos(username);
       setUserDto(data)
     }catch(e){}
   }
 
   const fetchUserResults = async () => {
     try{
-      const data = await getResults(userDto.username);
-      setResultsDto(data)
+      if (username){
+        const data = await getResults(username);
+        setResultsDto(data)
+      }
     }catch(e){
     }
   }
 
   useEffect(()  => {
     fetchUserData();
-  },[])
+  },[username])
 
-
+  useEffect(()=>{
+    if (gUsername)
+        setUsername(gUsername)
+  },[gUsername])
 
 
   useEffect(()=>{
-    if(userDto)
-    console.log("userDto : " , userDto)
     if(userDto)
       fetchUserResults();
     if(userDto)
@@ -93,11 +106,14 @@ export default function Profile() {
     setPhoneValue(userDto.phone);
     setSexValue(userDto.sex);
     setUserNameValue(userDto.username)
-    // setPasswordValue(userDto.password)
     setCountryValue(userDto.country)
    }
   },[userDto])
 
+
+  useEffect(()=>{
+
+  },[username])
 
 
   return (
@@ -108,7 +124,7 @@ export default function Profile() {
           <div className="user-info">
             <FontAwesomeIcon className="user-icon" icon={faUser} />
             <div className="user-details">
-              <h2 className="user-name">{userDto? userDto.username:'loading...'}</h2>
+              <h2 className="user-name">{username? username:'loading...'}</h2>
             </div>
           </div>
           <FontAwesomeIcon className="btn edit-icon" icon={faPen} onClick={()=>handleOpenModal()} />

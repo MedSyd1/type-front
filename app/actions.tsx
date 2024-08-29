@@ -48,3 +48,8 @@ export async function sendResult(resultDto: any) {
     throw e;
   }
 }
+
+
+export async function createUser(){
+  
+}

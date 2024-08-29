@@ -1,12 +1,17 @@
-
+"use client"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { TestProps } from '../provider';
 import "./result.css"
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import {sendResult} from '../actions';
+import GlobalContext from '../context';
 
 export default function Result({updateState,wpm,ts,nc,nw}:TestProps) {
+
+    const context = useContext(GlobalContext);
+    const {folder_Id} = {...context}
+    console.log("this the folder id : " ,folder_Id)
 
     const addingResult = async () => {
 
@@ -21,7 +26,7 @@ export default function Result({updateState,wpm,ts,nc,nw}:TestProps) {
             .toString()
             .padStart(2, '0')}`;
 
-        const resultDto : any = {folder_Id:1,wpm:Number(wpm),date : formattedDate, chars:`${nc} / ${nw}` }
+        const resultDto : any = {folder_Id:folder_Id,wpm:Number(wpm),date : formattedDate, chars:`${nc} / ${nw}` }
         const data = sendResult(resultDto);
     }
     useEffect(()=>{

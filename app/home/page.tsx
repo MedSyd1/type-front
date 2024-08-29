@@ -14,7 +14,7 @@ export default function Home() {
   const [nc,setNc] = useState(0);
   const [nw,setNw] = useState(0);
 
-  
+    
   const getInfos = (start:Date,end:Date,corretIds:number[],wrongIds:number[]) => {
     
     setNc(corretIds.length)

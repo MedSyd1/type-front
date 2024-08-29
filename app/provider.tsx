@@ -66,6 +66,9 @@ export type TestProps  = {
 
 export interface CustomJwtPayload extends JwtPayload{
     scope:string[];
+    sub?: any;
+    userId?: any;
+    folderId?: any;
 }
 
 export const login = async (username:string,password:string) => {
@@ -85,7 +88,6 @@ export const login = async (username:string,password:string) => {
         if(res.status === 200)
         {
             const decodeJwt = jwtDecode<CustomJwtPayload>(res.data['access-token'])
-            // console.log(decodeJwt)
             const roles = decodeJwt.scope;
             await createJwtCookie("jwt",res.data['access-token']);
             await createJwtCookie("isAuthenticated",true);

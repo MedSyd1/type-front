@@ -25,7 +25,7 @@ export default function Test({getInfos}:TestProps) {
 
   const handleKeydown = (event: KeyboardEvent) => {
 
-    
+
     if (event.key === "Backspace") {
       setR(false);
       return;
