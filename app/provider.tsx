@@ -105,4 +105,9 @@ export const logout = async () => {
     await deleteCookie("jwt");
     await deleteCookie("isAuthenticated");
     await deleteCookie("roles");
+    if (typeof window !== 'undefined') {
+        localStorage.removeItem("gUsername");
+        localStorage.removeItem("userId");
+        localStorage.removeItem("folder_Id");
+      }
 }

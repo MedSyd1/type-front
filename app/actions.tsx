@@ -50,6 +50,14 @@ export async function sendResult(resultDto: any) {
 }
 
 
-export async function createUser(){
+export async function createUser(userDto:any){
+
+  const endPoint = "/user/createAccount"
+
+  try{
+    const reponse = await apiClient.post(endPoint,userDto);
+  }catch(e){
+    throw e;
+  }
   
 }

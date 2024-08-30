@@ -1,6 +1,6 @@
 "use client"
 
-import { FormEvent, useContext, useState } from "react";
+import { FormEvent, useContext, useEffect, useState } from "react";
 import "./login.css";
 import { useRouter } from "next/navigation";
 import {jwtDecode} from "jwt-decode"; // Ensure correct import
@@ -36,16 +36,21 @@ export default function Page() {
             } else {
                 console.log("You do not have the required role.");
             }
+            
+
 
         } catch (error) {
             console.error("Login failed:", error);
         }
     };
 
+    useEffect(()=>{
+    },[])
+
     return (
         <form onSubmit={handleLogin}>
-            <div className="container">
-                <div className="username">
+            <div className="lcontainer">
+                <div className="lusername">
                     <label htmlFor="username">Username</label>
                     <input
                         type="text"
@@ -55,7 +60,7 @@ export default function Page() {
                         onChange={(e) => setUsername(e.target.value)}
                     />
                 </div>
-                <div className="password">
+                <div className="lpassword">
                     <label htmlFor="password">Password</label>
                     <input
                         type="password"
@@ -65,7 +70,8 @@ export default function Page() {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </div>
-                <button type="submit">Login</button>
+                <button className="lbutton" type="submit">Login</button>
+                <a className="ll" href="/register">register</a>
             </div>
         </form>
     );
